@@ -1,0 +1,29 @@
+schema {
+    query: Query
+}
+
+type Query {
+    allUsers: [User]
+    user(id: Int): User
+}
+
+type User {
+    userId: Int
+    userName: String
+    password: String
+    firstName: String
+    lastName: String
+    biography: String
+    email: String
+    createDate: String
+}
+
+type Post {
+    postId: Int
+    userId: Int
+    postTitle: String
+    postContent: String
+    audioTrack: String
+    coverImage: String
+    createDate: String
+}
