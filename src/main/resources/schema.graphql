@@ -3,8 +3,25 @@ schema {
 }
 
 type Query {
-    allUsers: [User]
     user(id: Int): User
+    allUsers: [User]
+    post(id: Int): Post
+    allPosts: [Post]
+    track(id: Int): Track
+    allTracks: [Track]
+}
+
+type Track {
+    trackId: Int
+    userId: Int
+    postId: Int
+    reproductions: Int
+    price: Float
+    location: String
+    format: String
+    description: String
+    likes: Int
+    createdDate: String
 }
 
 type User {
@@ -23,7 +40,7 @@ type Post {
     userId: Int
     postTitle: String
     postContent: String
-    audioTrack: String
+    trackId: String
     coverImage: String
-    createDate: String
+    createdDate: String
 }

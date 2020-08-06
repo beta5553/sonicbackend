@@ -13,10 +13,10 @@ import java.util.List;
 public class AllUsersDataFetcher implements DataFetcher <List<User>> {
 
     @Autowired
-    UserRepository userRepo;
+    UserRepository userRepository;
 
     @Override
     public List<User> get(DataFetchingEnvironment dataFetchingEnvironment) {
-        return userRepo.findAll();
+        return userRepository.findAll();
     }
 }

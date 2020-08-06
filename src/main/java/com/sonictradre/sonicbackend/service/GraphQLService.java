@@ -1,11 +1,13 @@
 package com.sonictradre.sonicbackend.service;
 
+import com.sonictradre.sonicbackend.model.Post;
+import com.sonictradre.sonicbackend.model.Track;
 import com.sonictradre.sonicbackend.model.User;
+import com.sonictradre.sonicbackend.repository.PostRepository;
+import com.sonictradre.sonicbackend.repository.TrackRepository;
 import com.sonictradre.sonicbackend.repository.UserRepository;
-import com.sonictradre.sonicbackend.service.datafetcher.AllUsersDataFetcher;
-import com.sonictradre.sonicbackend.service.datafetcher.UserDataFetcher;
+import com.sonictradre.sonicbackend.service.datafetcher.*;
 import graphql.GraphQL;
-import graphql.schema.DataFetcher;
 import graphql.schema.GraphQLSchema;
 import graphql.schema.idl.RuntimeWiring;
 import graphql.schema.idl.SchemaGenerator;
@@ -34,14 +36,34 @@ public class GraphQLService {
     UserRepository userRepository;
 
     @Autowired
+    PostRepository postRepository;
+
+    @Autowired
+    TrackRepository trackRepository;
+
+    @Autowired
     private AllUsersDataFetcher allUsersDataFetcher;
 
     @Autowired
     private UserDataFetcher userDataFetcher;
 
+    @Autowired
+    private AllPostsDataFetcher allPostsDataFetcher;
+
+    @Autowired
+    private PostDataFetcher postDataFetcher;
+
+    @Autowired
+    private AllTracksDataFetcher allTracksDataFetcher;
+
+    @Autowired
+    private TrackDataFetcher tracksDataFetcher;
+
     @PostConstruct
     public void loadSchema() throws IOException {
         //loadDataIntoPGsql();
+        //loadPostDataIntoPGSql();
+        loadTrackDataIntoPGSql();
         File schemaFile = resource.getFile();
         TypeDefinitionRegistry typeRegistry = new SchemaParser().parse(schemaFile);
         RuntimeWiring wiring = buildRuntimeWiring();
@@ -59,12 +81,36 @@ public class GraphQLService {
         }) ;
     }
 
+    private void loadPostDataIntoPGSql(){
+        Stream.of(
+                new Post(2, 1, "title", "content", "tracklocation", "coverimage", new Date("01/01/2020")),
+                new Post(3, 1, "title", "content", "tracklocation", "coverimage", new Date("01/01/2020")),
+                new Post(4, 1, "title", "content", "tracklocation", "coverimage", new Date("01/01/2020"))
+        ).forEach(post -> {
+               postRepository.save(post);
+        });
+    }
+
+    private void loadTrackDataIntoPGSql(){
+        Stream.of(
+                new Track(1,2,3,5,10.50,"file location", "file format", "Description", 10, new Date("01/01/2020")),
+                new Track(2,2,3,5,10.50,"file location", "file format", "Description", 10, new Date("01/01/2020")),
+                new Track(3,2,3,5,10.50,"file location", "file format", "Description", 10, new Date("01/01/2020"))
+        ).forEach(track -> {
+            trackRepository.save(track);
+        });
+    }
+
     private RuntimeWiring buildRuntimeWiring() {
         return RuntimeWiring.newRuntimeWiring()
                 .type("Query", typeWiring ->
                  typeWiring
                          .dataFetcher("allUsers", allUsersDataFetcher)
                          .dataFetcher("user", userDataFetcher)
+                         .dataFetcher("allPosts", allPostsDataFetcher)
+                         .dataFetcher("post", postDataFetcher)
+                         .dataFetcher("allTracks", allTracksDataFetcher)
+                         .dataFetcher("track", tracksDataFetcher)
                 ).build();
     }
 
