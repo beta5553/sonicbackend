@@ -11,6 +11,24 @@ type Query {
     allTracks: [Track]
 }
 
+type Mutation {
+    createUser(user: UserInput): User
+    createPost(post: PostInput): Post
+    createTrack(track: TrackInput): Track
+}
+
+input UserInput {
+    userId: Int
+}
+
+input PostInput {
+    postId: Int
+}
+
+input TrackInput {
+    trackId: Int
+}
+
 type Track {
     trackId: Int
     userId: Int

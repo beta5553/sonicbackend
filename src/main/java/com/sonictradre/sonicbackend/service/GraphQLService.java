@@ -15,6 +15,7 @@ import graphql.schema.idl.SchemaParser;
 import graphql.schema.idl.TypeDefinitionRegistry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
 
@@ -27,7 +28,7 @@ import java.util.stream.Stream;
 @Component
 public class GraphQLService {
 
-    @Value("classpath:schema.graphql")
+    @Value("classpath:schema.graphqls")
     Resource resource;
 
     private GraphQL graphQL;
@@ -59,16 +60,19 @@ public class GraphQLService {
     @Autowired
     private TrackDataFetcher tracksDataFetcher;
 
+    @Autowired
+    private CreateUserDataFetcher createUserDataFetcher;
+
     @PostConstruct
     public void loadSchema() throws IOException {
         //loadDataIntoPGsql();
         //loadPostDataIntoPGSql();
-        loadTrackDataIntoPGSql();
+        //loadTrackDataIntoPGSql();
         File schemaFile = resource.getFile();
         TypeDefinitionRegistry typeRegistry = new SchemaParser().parse(schemaFile);
         RuntimeWiring wiring = buildRuntimeWiring();
         GraphQLSchema schema = new SchemaGenerator().makeExecutableSchema(typeRegistry, wiring);
-        graphQL = GraphQL.newGraphQL(schema).build();
+        this.graphQL = GraphQL.newGraphQL(schema).build();
     }
 
     private void loadDataIntoPGsql() {
@@ -111,9 +115,12 @@ public class GraphQLService {
                          .dataFetcher("post", postDataFetcher)
                          .dataFetcher("allTracks", allTracksDataFetcher)
                          .dataFetcher("track", tracksDataFetcher)
-                ).build();
+                ).type("Mutation", typeWiring -> typeWiring
+                        .dataFetcher("createUser", createUserDataFetcher))
+                .build();
     }
 
+    @Bean
     public GraphQL getGraphQL(){
         return graphQL;
     }

@@ -1,0 +1,64 @@
+schema {
+    query: Query
+}
+
+type Query {
+    user(id: Int): User
+    allUsers: [User]
+    post(id: Int): Post
+    allPosts: [Post]
+    track(id: Int): Track
+    allTracks: [Track]
+}
+
+type Mutation {
+    createUser(user: UserInput): User
+    createPost(post: PostInput): Post
+    createTrack(track: TrackInput): Track
+}
+
+input UserInput {
+    userId: Int
+}
+
+input PostInput {
+    postId: Int
+}
+
+input TrackInput {
+    trackId: Int
+}
+
+type Track {
+    trackId: Int
+    userId: Int
+    postId: Int
+    reproductions: Int
+    price: Float
+    location: String
+    format: String
+    description: String
+    likes: Int
+    createdDate: String
+}
+
+type User {
+    userId: Int
+    userName: String
+    password: String
+    firstName: String
+    lastName: String
+    biography: String
+    email: String
+    createDate: String
+}
+
+type Post {
+    postId: Int
+    userId: Int
+    postTitle: String
+    postContent: String
+    trackId: String
+    coverImage: String
+    createdDate: String
+}
