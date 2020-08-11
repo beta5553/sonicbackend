@@ -1,8 +1,6 @@
 package com.sonictradre.sonicbackend.service;
 
-import com.sonictradre.sonicbackend.model.Post;
-import com.sonictradre.sonicbackend.model.Track;
-import com.sonictradre.sonicbackend.model.User;
+import com.sonictradre.sonicbackend.dataloader.DataLoader;
 import com.sonictradre.sonicbackend.repository.PostRepository;
 import com.sonictradre.sonicbackend.repository.TrackRepository;
 import com.sonictradre.sonicbackend.repository.UserRepository;
@@ -22,8 +20,6 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 import java.io.File;
 import java.io.IOException;
-import java.util.Date;
-import java.util.stream.Stream;
 
 @Component
 public class GraphQLService {
@@ -43,9 +39,6 @@ public class GraphQLService {
     TrackRepository trackRepository;
 
     @Autowired
-    private AllUsersDataFetcher allUsersDataFetcher;
-
-    @Autowired
     private UserDataFetcher userDataFetcher;
 
     @Autowired
@@ -55,19 +48,19 @@ public class GraphQLService {
     private PostDataFetcher postDataFetcher;
 
     @Autowired
-    private AllTracksDataFetcher allTracksDataFetcher;
-
-    @Autowired
-    private TrackDataFetcher tracksDataFetcher;
+    private TrackDataFetcher trackDataFetcher;
 
     @Autowired
     private CreateUserDataFetcher createUserDataFetcher;
 
+    @Autowired
+    private DataLoader dataLoader;
+
     @PostConstruct
     public void loadSchema() throws IOException {
-        //loadDataIntoPGsql();
-        //loadPostDataIntoPGSql();
-        //loadTrackDataIntoPGSql();
+        //dataLoader.loadUserData();
+        //dataLoader.loadPostData();
+        //dataLoader.loadTrackData();
         File schemaFile = resource.getFile();
         TypeDefinitionRegistry typeRegistry = new SchemaParser().parse(schemaFile);
         RuntimeWiring wiring = buildRuntimeWiring();
@@ -75,46 +68,16 @@ public class GraphQLService {
         this.graphQL = GraphQL.newGraphQL(schema).build();
     }
 
-    private void loadDataIntoPGsql() {
-        Stream.of(
-                new User(2,"userName","firstName","lastName","bio","pwd","email", new Date("01/01/2020")),
-                new User(3,"userName","firstName","lastName","bio","pwd","email", new Date("01/01/2020")),
-                new User(4,"userName","firstName","lastName","bio","pwd","email", new Date("01/01/2020"))
-        ).forEach(user -> {
-            userRepository.save(user);
-        }) ;
-    }
-
-    private void loadPostDataIntoPGSql(){
-        Stream.of(
-                new Post(2, 1, "title", "content", "tracklocation", "coverimage", new Date("01/01/2020")),
-                new Post(3, 1, "title", "content", "tracklocation", "coverimage", new Date("01/01/2020")),
-                new Post(4, 1, "title", "content", "tracklocation", "coverimage", new Date("01/01/2020"))
-        ).forEach(post -> {
-               postRepository.save(post);
-        });
-    }
-
-    private void loadTrackDataIntoPGSql(){
-        Stream.of(
-                new Track(1,2,3,5,10.50,"file location", "file format", "Description", 10, new Date("01/01/2020")),
-                new Track(2,2,3,5,10.50,"file location", "file format", "Description", 10, new Date("01/01/2020")),
-                new Track(3,2,3,5,10.50,"file location", "file format", "Description", 10, new Date("01/01/2020"))
-        ).forEach(track -> {
-            trackRepository.save(track);
-        });
-    }
-
     private RuntimeWiring buildRuntimeWiring() {
         return RuntimeWiring.newRuntimeWiring()
                 .type("Query", typeWiring ->
                  typeWiring
-                         .dataFetcher("allUsers", allUsersDataFetcher)
-                         .dataFetcher("user", userDataFetcher)
-                         .dataFetcher("allPosts", allPostsDataFetcher)
-                         .dataFetcher("post", postDataFetcher)
-                         .dataFetcher("allTracks", allTracksDataFetcher)
-                         .dataFetcher("track", tracksDataFetcher)
+                         .dataFetcher("allUsers", userDataFetcher.getAllUsers())
+                         .dataFetcher("user", userDataFetcher.getUser())
+                         .dataFetcher("allPosts", postDataFetcher.getAllPost())
+                         .dataFetcher("post", postDataFetcher.getPost())
+                         .dataFetcher("allTracks", trackDataFetcher.getAllTracks())
+                         .dataFetcher("track", trackDataFetcher.getTrack())
                 ).type("Mutation", typeWiring -> typeWiring
                         .dataFetcher("createUser", createUserDataFetcher))
                 .build();

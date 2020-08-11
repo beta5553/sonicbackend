@@ -50,7 +50,7 @@ type User {
     lastName: String
     biography: String
     email: String
-    createDate: String
+    createdDate: String
 }
 
 type Post {

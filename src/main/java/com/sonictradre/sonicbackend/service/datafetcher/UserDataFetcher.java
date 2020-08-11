@@ -7,21 +7,22 @@ import graphql.schema.DataFetchingEnvironment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.xml.crypto.Data;
+import java.util.List;
 import java.util.Optional;
 
 @Component
-public class UserDataFetcher implements DataFetcher<Optional<User>> {
+public class UserDataFetcher {
 
     @Autowired
     UserRepository userRepository;
 
-    @Override
-    public Optional<User> get(DataFetchingEnvironment dataFetchingEnvironment) {
-        Integer id = dataFetchingEnvironment.getArgument("id");
-        System.out.println("User id:"+ id);
-        Optional<User> user = userRepository.findById(id);
-        System.out.println();
-
-        return user;
+    public DataFetcher<List<User>> getAllUsers(){
+        return dataFetchingEnvironment -> userRepository.findAll();
     }
+
+    public DataFetcher getUser() {
+        return dataFetchingEnvironment -> userRepository.findById(dataFetchingEnvironment.getArgument("id"));
+    }
+
 }

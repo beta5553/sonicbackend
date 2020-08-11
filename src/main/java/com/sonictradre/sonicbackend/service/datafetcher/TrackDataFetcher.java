@@ -1,7 +1,9 @@
 package com.sonictradre.sonicbackend.service.datafetcher;
 
 import com.sonictradre.sonicbackend.model.Post;
+import com.sonictradre.sonicbackend.model.Track;
 import com.sonictradre.sonicbackend.repository.PostRepository;
+import com.sonictradre.sonicbackend.repository.TrackRepository;
 import graphql.schema.DataFetcher;
 import graphql.schema.DataFetchingEnvironment;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,18 +12,18 @@ import org.springframework.stereotype.Component;
 import java.util.Optional;
 
 @Component
-public class TrackDataFetcher implements DataFetcher<Optional<Post>> {
+public class TrackDataFetcher {
 
     @Autowired
-    PostRepository postRepository;
+    TrackRepository trackRepository;
 
-    @Override
-    public Optional<Post> get(DataFetchingEnvironment dataFetchingEnvironment) {
-    Integer id = dataFetchingEnvironment.getArgument("id");
-    System.out.println("User id:"+ id);
-    Optional<Post> post = postRepository.findById(id);
-    System.out.println();
+    public DataFetcher getAllTracks() {
+        return dataFetchingEnvironment -> trackRepository.findAll();
+    }
 
-    return post;
+
+    public DataFetcher getTrack(){
+        //<ptional<Track> track = trackRepository.findById(2);
+        return dataFetchingEnvironment -> trackRepository.findById(dataFetchingEnvironment.getArgument("id"));
     }
 }

@@ -1,3 +1,4 @@
+
 package com.sonictradre.sonicbackend.service.datafetcher;
 
 import com.sonictradre.sonicbackend.model.User;

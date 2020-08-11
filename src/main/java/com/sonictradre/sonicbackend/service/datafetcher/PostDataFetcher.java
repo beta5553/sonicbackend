@@ -10,18 +10,26 @@ import org.springframework.stereotype.Component;
 import java.util.Optional;
 
 @Component
-public class PostDataFetcher implements DataFetcher<Optional<Post>> {
+public class PostDataFetcher {
 
     @Autowired
     PostRepository postRepository;
 
-    @Override
-    public Optional<Post> get(DataFetchingEnvironment dataFetchingEnvironment) {
-    Integer id = dataFetchingEnvironment.getArgument("id");
-    System.out.println("User id:"+ id);
-    Optional<Post> post = postRepository.findById(id);
-    System.out.println();
+//    @Override
+//    public Optional<Post> get(DataFetchingEnvironment dataFetchingEnvironment) {
+//    Integer id = dataFetchingEnvironment.getArgument("id");
+//    System.out.println("User id:"+ id);
+//    Optional<Post> post = postRepository.findById(id);
+//    System.out.println();
+//
+//    return post;
+//    }
 
-    return post;
+    public DataFetcher getAllPost(){
+        return dataFetchingEnvironment -> postRepository.findAll();
+    }
+
+    public DataFetcher getPost(){
+        return dataFetchingEnvironment -> postRepository.findById(dataFetchingEnvironment.getArgument("id"));
     }
 }

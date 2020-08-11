@@ -11,13 +11,15 @@ import javax.xml.crypto.Data;
 import java.util.List;
 
 @Component
-public class AllPostsDataFetcher implements DataFetcher <List<Post>> {
+public class AllPostsDataFetcher
+//        implements DataFetcher <List<Post>>
+{
 
-    @Autowired
-    PostRepository postRepository;
-
-    @Override
-    public List<Post> get(DataFetchingEnvironment dataFetchingEnvironment) {
-        return postRepository.findAll();
-    }
+//    @Autowired
+//    PostRepository postRepository;
+//
+//    @Override
+//    public List<Post> get(DataFetchingEnvironment dataFetchingEnvironment) {
+//        return postRepository.findAll();
+//    }
 }
