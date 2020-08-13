@@ -58,7 +58,7 @@ public class DataLoader {
         //some code here....
     }
 
-    public void anotherDataLoader() {
+    public void anotherDataLoader1() {
         //some code here....
     }
 
