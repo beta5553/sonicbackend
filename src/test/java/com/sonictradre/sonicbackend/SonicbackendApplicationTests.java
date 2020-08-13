@@ -10,4 +10,8 @@ class SonicbackendApplicationTests {
     void contextLoads() {
     }
 
+    @Test
+    void simpleTest(){
+    }
+
 }
