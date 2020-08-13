@@ -58,4 +58,8 @@ public class DataLoader {
         //some code here....
     }
 
+    public void anotherDataLoader() {
+        //some code here....
+    }
+
 }
