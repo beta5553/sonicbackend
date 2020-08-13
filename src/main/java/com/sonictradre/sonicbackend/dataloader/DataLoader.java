@@ -54,4 +54,8 @@ public class DataLoader {
         });
     }
 
+    public void anotherDataLoader() {
+        //some code here....
+    }
+
 }
