@@ -46,6 +46,12 @@
             <version>2020-07-03T01-10-37-bb87d8f</version>
         </dependency>
 
+        <!-- more info: https://github.com/graphql-java-kickstart/graphql-java-tools -->
+        <dependency>
+            <groupId>com.graphql-java-kickstart</groupId>
+            <artifactId>graphql-java-tools</artifactId>
+            <version>6.1.0</version>
+        </dependency>
 
         <dependency>
             <groupId>org.springframework.boot</groupId>

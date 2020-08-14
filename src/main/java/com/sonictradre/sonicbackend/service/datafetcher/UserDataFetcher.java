@@ -3,11 +3,10 @@ package com.sonictradre.sonicbackend.service.datafetcher;
 import com.sonictradre.sonicbackend.model.User;
 import com.sonictradre.sonicbackend.repository.UserRepository;
 import graphql.schema.DataFetcher;
-import graphql.schema.DataFetchingEnvironment;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.xml.crypto.Data;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,6 +22,16 @@ public class UserDataFetcher {
 
     public DataFetcher getUser() {
         return dataFetchingEnvironment -> userRepository.findById(dataFetchingEnvironment.getArgument("id"));
+    }
+
+    public DataFetcher deleteUser() {
+        return dataFetchingEnvironment -> userRepository.findById(dataFetchingEnvironment.getArgument("id"));
+    }
+
+
+    private Optional<User> findAnddeleteUser(Integer id) {
+        Optional<User> user = userRepository.findById(id);
+        return user;
     }
 
 }

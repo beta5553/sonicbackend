@@ -78,8 +78,13 @@ public class GraphQLService {
                          .dataFetcher("post", postDataFetcher.getPost())
                          .dataFetcher("allTracks", trackDataFetcher.getAllTracks())
                          .dataFetcher("track", trackDataFetcher.getTrack())
-                ).type("Mutation", typeWiring -> typeWiring
-                        .dataFetcher("createUser", createUserDataFetcher))
+                )
+                .type("Mutation", typeWiring -> typeWiring
+                        .dataFetcher("createUser", userDataFetcher.deleteUser())
+                        //.dataFetcher("deleteUser", createUserDataFetcher)
+                        //.dataFetcher("editUser", createUserDataFetcher)
+                )
+
                 .build();
     }
 
