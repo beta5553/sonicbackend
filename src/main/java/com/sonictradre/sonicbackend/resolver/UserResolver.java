@@ -1,14 +1,27 @@
-//package com.sonictradre.sonicbackend.resolver;
-//
-//import com.coxautodev.graphql.tools.GraphQLQueryResolver;
-//import com.sonictradre.sonicbackend.model.User;
-//
-//import java.util.Date;
-//
-//public class UserResolver implements GraphQLQueryResolver {
-//
-//    public User getUser(Integer id) {
-//        return new User(4,"userName","firstName","lastName","bio","pwd","email", new Date("01/01/2020"));
-//    }
-//
-//}
+package com.sonictradre.sonicbackend.resolver;
+
+import com.coxautodev.graphql.tools.GraphQLQueryResolver;
+import com.sonictradre.sonicbackend.model.User;
+import com.sonictradre.sonicbackend.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
+
+@Service
+public class UserResolver implements GraphQLQueryResolver {
+
+    @Autowired
+    UserRepository userRepository;
+
+    public Optional<User> user(Integer id) {
+        System.out.println("id: " + id);
+        return userRepository.findById(id);
+    }
+
+    public List<User> allUsers(){
+        return userRepository.findAll();
+    }
+
+}

@@ -35,22 +35,18 @@
         <!-- GraphQL Dependencies -->
         <dependency>
             <groupId>com.graphql-java</groupId>
-            <artifactId>graphql-java-spring-boot-starter-webmvc</artifactId>
-            <version>2020-07-12T23-24-35-c6606f6</version>
+            <artifactId>graphql-spring-boot-starter</artifactId>
+            <version>5.0.2</version>
         </dependency>
-
-        <!-- https://mvnrepository.com/artifact/com.graphql-java/graphql-java -->
         <dependency>
             <groupId>com.graphql-java</groupId>
-            <artifactId>graphql-java</artifactId>
-            <version>2020-07-03T01-10-37-bb87d8f</version>
-        </dependency>
-
-        <!-- more info: https://github.com/graphql-java-kickstart/graphql-java-tools -->
-        <dependency>
-            <groupId>com.graphql-java-kickstart</groupId>
             <artifactId>graphql-java-tools</artifactId>
-            <version>6.1.0</version>
+            <version>5.2.4</version>
+        </dependency>
+        <dependency>
+            <groupId>com.graphql-java</groupId>
+            <artifactId>graphiql-spring-boot-starter</artifactId>
+            <version>5.0.2</version>
         </dependency>
 
         <dependency>
@@ -80,13 +76,6 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>1.18.12</version>
-            <scope>provided</scope>
-        </dependency>
-
     </dependencies>
 
     <build>
