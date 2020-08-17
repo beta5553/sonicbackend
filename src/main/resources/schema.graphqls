@@ -1,6 +1,7 @@
-.    #schema {
-#    query: Query
-#}
+schema {
+    query: Query
+    mutation: Mutation
+}
 
 #type Query {
 #    user(id: Int): User
@@ -11,13 +12,12 @@
 #    allTracks: [Track]
 #}
 #
-#type Mutation {
-#    createUser(user: UserInput): User
-#    createPost(post: PostInput): Post
-#    createTrack(track: TrackInput): Track
-#    deleteUser(id: Int): User
-#    deleteTrack(id: Int): Track
-#}
+
+type Mutation {
+    deleteUser(id: Int): User
+    createUser(firstName: String, lastName: String, userName: String, email: String, password: String, biography: String): User
+    updateUser(id: Int, firstName: String, lastName: String, userName: String, email: String, password: String, biography: String): User
+}
 
 type Query {
     user(id: Int): User

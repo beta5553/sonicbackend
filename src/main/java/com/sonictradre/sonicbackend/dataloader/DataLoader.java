@@ -9,6 +9,7 @@ import com.sonictradre.sonicbackend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.stream.Stream;
 
@@ -26,9 +27,9 @@ public class DataLoader {
 
     public void loadUserData(){
         Stream.of(
-                new User(2,"userName","firstName","lastName","bio","pwd","email", new Date("01/01/2020")),
-                new User(3,"userName","firstName","lastName","bio","pwd","email", new Date("01/01/2020")),
-                new User(4,"userName","firstName","lastName","bio","pwd","email", new Date("01/01/2020"))
+                new User(2,"userName","firstName","lastName","bio","pwd","email", LocalDate.now(), LocalDate.now()),
+                new User(3,"userName","firstName","lastName","bio","pwd","email", LocalDate.now(), LocalDate.now()),
+                new User(4,"userName","firstName","lastName","bio","pwd","email", LocalDate.now(), LocalDate.now())
         ).forEach(user -> {
             userRepository.save(user);
         }) ;
@@ -61,5 +62,4 @@ public class DataLoader {
     public void anotherDataLoader1() {
         //some code here....
     }
-
 }

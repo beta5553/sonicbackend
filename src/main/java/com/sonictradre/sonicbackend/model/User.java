@@ -4,11 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.beans.factory.annotation.Value;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Date;
 
 @AllArgsConstructor
@@ -19,7 +18,7 @@ import java.util.Date;
 @Table(name = "user", schema="public")
 public class User {
 
-    @Id
+    @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Integer userId;
     private String userName;
     private String firstName;
@@ -27,6 +26,7 @@ public class User {
     private String biography;
     private String password;
     private String email;
-    private Date createdDate;
+    private LocalDate createdDate;
+    private LocalDate lastModifiedDate;
 
 }
