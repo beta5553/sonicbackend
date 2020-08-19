@@ -5,6 +5,6 @@ spring:
   jpa:
     show-sql: true
   datasource:
-    url: jdbc:postgresql://ec2-3-223-9-166.compute-1.amazonaws.com:5432/d166bi9qteudbh
-    username: crxxzzryggyofi
-    password: 5bcb0db1238e50a02f0edec714c9fe628a40d347722dfadd2dbd58767ec36cad
+    url:
+    username:
+    password:
